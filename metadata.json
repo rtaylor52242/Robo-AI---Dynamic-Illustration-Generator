@@ -1,0 +1,5 @@
+{
+  "name": "Robo AI - Dynamic Illustration Generator",
+  "description": "An AI-powered tool to take a single base illustration or avatar and generate multiple stylistically consistent variations (emotions, poses, props, seasonal outfits) while preserving core identity, line weight, proportions, and brand color palette.",
+  "requestFramePermissions": []
+}
