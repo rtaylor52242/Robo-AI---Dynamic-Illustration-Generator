@@ -1,6 +1,7 @@
 import React, { useCallback, useRef, useState, useEffect } from 'react';
 import type { BaseImage, ConsistencyLocks, PromptTuning, SavedTemplate } from '../types';
 import { UploadIcon, Wand2Icon, SaveIcon, InfoIcon, XCircleIcon, Trash2Icon } from './icons';
+import Tooltip from './Tooltip';
 
 interface LoadTemplateModalProps {
   onClose: () => void;
@@ -269,9 +270,21 @@ const ControlsPanel: React.FC<ControlsPanelProps> = ({
   };
 
 
-  const renderSection = (title: string, children: React.ReactNode) => (
+  const renderSection = (title: string, tooltipText: string, children: React.ReactNode) => (
     <div className="bg-gray-800/50 rounded-lg p-4">
-      <h2 className="text-lg font-semibold text-gray-100 mb-4">{title}</h2>
+      <div className="flex items-center gap-2 mb-4">
+        <h2 className="text-lg font-semibold text-gray-100">{title}</h2>
+        <Tooltip text={tooltipText}>
+          <button 
+            type="button"
+            className="text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-indigo-500 rounded-full" 
+            aria-label={`More info about ${title}`}
+            onClick={(e) => e.preventDefault()}
+          >
+            <InfoIcon className="w-4 h-4" />
+          </button>
+        </Tooltip>
+      </div>
       {children}
     </div>
   );
@@ -288,7 +301,7 @@ const ControlsPanel: React.FC<ControlsPanelProps> = ({
         </div>
       )}
 
-      {renderSection("1. Base Image", (
+      {renderSection("1. Base Image", "Upload your character illustration. PNGs with transparent backgrounds work best. This tool is not for real photos.", (
         <div>
           <div
             className={`relative border-2 border-dashed rounded-lg p-4 text-center cursor-pointer transition-colors
@@ -323,7 +336,7 @@ const ControlsPanel: React.FC<ControlsPanelProps> = ({
         </div>
       ))}
       
-      {renderSection("2. Variations", (
+      {renderSection("2. Variations", "List the changes you want, one per line. Use presets or save/load your own lists as templates.", (
         <div className="space-y-3">
           <textarea
             value={variations}
@@ -360,7 +373,7 @@ const ControlsPanel: React.FC<ControlsPanelProps> = ({
         </div>
       ))}
 
-      {renderSection("3. Brand & Style Controls", (
+      {renderSection("3. Brand & Style Controls", "Crucial for consistency. Set your brand colors and 'lock' core character features to prevent the AI from changing them.", (
         <div className="space-y-4">
             <div className="grid grid-cols-2 gap-4">
                 <div>
@@ -393,7 +406,7 @@ const ControlsPanel: React.FC<ControlsPanelProps> = ({
         </div>
       ))}
       
-      {renderSection("4. Prompt Tuning (Advanced)", (
+      {renderSection("4. Prompt Tuning (Advanced)", "Fine-tune the AI's interpretation. Control the intensity of expressions or the size of props mentioned in your prompts.", (
           <div className="space-y-4">
               <div>
                   <label htmlFor="expression-intensity" className="flex justify-between text-sm font-medium text-gray-300">
